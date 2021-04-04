@@ -1,26 +1,58 @@
 <template>
-  <img alt="Vue logo" src="./assets/logo.png">
-  <HelloWorld msg="Welcome to Your Vue.js App"/>
+  <div class="container" >
+          <div class="coloumn">
+              <div class="product_area">
+                    <product v-for="product in products"
+                      :key="product.productId" 
+                      :product="product"></product> 
+              </div>
+          </div>
+  </div> 
 </template>
-
 <script>
-import HelloWorld from './components/HelloWorld.vue'
-
+import Product from './components/Product'
 export default {
-  name: 'App',
-  components: {
-    HelloWorld
-  }
+  data(){
+    return{
+      products:[],
+      sitename: "Петрович"
+    }
+  },
+components: {
+			'product': Product,
+		},
+  computed:{
+  },
+  mounted(){ 
+        fetch('./products.json')
+						.then((response)=>{
+							return response.json(); 
+						}).then((data)=>{
+							this.products = data;
+						})
+    },
 }
-</script>
 
+</script>
 <style>
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
+body{
+  font-family: Arial,Helvetica,sans-serif;
 }
+a{
+  display: block;
+}
+p {
+    font-size: 14px;
+    line-height: 18px;
+    margin: 0 0 18px;
+}
+p:last-child {
+    margin-bottom: 0;
+}
+html {
+    color: #222;
+    font-size: 14px;
+    line-height: 1.4;
+}
+
 </style>
